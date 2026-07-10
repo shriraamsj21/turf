@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home | Turf Booking New
+{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- LOGO -->
+<div class="logo-container">
+    <img src="{% static 'logo.png' %}" alt="Logo" class="site-logo">
+</div>
+
+<!-- STRAP AND SCORE TITLE -->
+<div class="container text-center pt-4">
+  <h1 class="gaming-font text-white curved-title">
+    STRAP AND SCORE
+  </h1>
+</div>
+
+<!-- INTERNAL / EXTERNAL SELECTION -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+
+      <div class="d-grid gap-3">
+        <button type="button" class="btn btn-outline-light btn-lg" id="internalBtn">
+          INTERNAL (College)
+        </button>
+
+        <button type="button" class="btn btn-outline-light btn-lg" id="externalBtn">
+          EXTERNAL (Outsider)
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BOOK NOW BUTTON (NO FORM) -->
+<div class="container mt-4 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+
+      <button class="btn btn-success btn-lg book-now-btn"
+              id="bookBtn"
+              disabled
+              onclick="goNext()">
+        BOOK NOW
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- STYLES -->
+<style>
+  .curved-title {
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    transform: perspective(600px) rotateX(18deg);
+    padding-top: 150px;
+  }
+
+  .active-selection {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .book-now-btn {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  .logo-container{
+    position: absolute;
+    top: 80px;       /* move logo up or down */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.site-logo{
+    width: 180px;   /* increase logo size */
+}
+
+  @media (min-width: 768px) {
+    .curved-title {
+      font-size: 3rem;
+    }
+    .book-now-btn {
+      width: 60%;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<!-- SCRIPT -->
+<script>
+  const internalBtn = document.getElementById("internalBtn");
+  const externalBtn = document.getElementById("externalBtn");
+  const bookBtn = document.getElementById("bookBtn");
+
+  let selectedType = null;
+
+  internalBtn.addEventListener("click", () => {
+    selectedType = "internal";
+    internalBtn.classList.add("active-selection");
+    externalBtn.classList.remove("active-selection");
+    bookBtn.disabled = false;
+  });
+
+  externalBtn.addEventListener("click", () => {
+    selectedType = "external";
+    externalBtn.classList.add("active-selection");
+    internalBtn.classList.remove("active-selection");
+    bookBtn.disabled = false;
+  });
+
+  function goNext() {
+    if (selectedType === "internal") {
+      window.location.href = "{% url 'booking:internal_login' %}";
+    } else if (selectedType === "external") {
+      window.location.href = "{% url 'booking:external_slots' %}";
+    }
+  }
+</script>
+
+{% endblock %}

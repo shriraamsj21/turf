@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center text-white"
+     style="min-height:85vh;">
+
+    <h2 class="mb-4 fw-bold">Email Verification</h2>
+
+    {% if error %}
+        <div class="alert alert-danger text-center w-100"
+             style="max-width:400px;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST" class="w-100" style="max-width:400px;">
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Enter the OTP sent to your Email
+            </label>
+
+            <input
+                type="text"
+                name="otp"
+                maxlength="6"
+                class="form-control bg-transparent text-white border-light"
+                required>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success w-100">
+
+            Verify OTP
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

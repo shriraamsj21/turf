@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Internal Booking Details{% endblock %}
+
+{% block content %}
+<div class="container py-4 text-white">
+
+  <!-- HEADER -->
+  <div class="position-relative text-center mb-4">
+    <h3>Internal Details</h3>
+
+    <!-- BACK BUTTON -->
+    <a href="{% url 'booking:internal_slots' %}"
+       class="btn btn-sm btn-danger position-absolute end-0 top-50 translate-middle-y">
+      ← Back
+    </a>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  {% if error %}
+<div class="alert alert-danger text-center py-2 px-3 mb-3"
+     style="font-size: 0.9rem; max-width: 720px; margin: 0 auto;">
+  {{ error }}
+</div>
+{% endif %}
+
+  <!-- LIGHT GREY BOX -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="p-4 rounded"
+           style="background: rgba(0, 0, 0, 0.15); backdrop-filter: blur(4px);">
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- CUSTOMER NAME -->
+          <div class="mb-3 text-center">
+            <label class="form-label fw-semibold">Name</label>
+            <input type="text"
+                   name="name"
+                   class="form-control form-control-sm bg-transparent text-white border-light text-center mx-auto"
+                   style="max-width: 260px;"
+                   required>
+          </div>
+
+          <!-- MOBILE NUMBER -->
+          <div class="mb-3 text-center">
+            <label class="form-label fw-semibold">Mobile Number</label>
+            <input type="tel"
+                   name="mobile"
+                   class="form-control form-control-sm bg-transparent text-white border-light text-center mx-auto"
+                   style="max-width: 260px;"
+                   required>
+          </div>
+
+          <!-- NUMBER OF PERSONS -->
+          <div class="mb-4 text-center">
+            <label class="form-label fw-semibold">Number of Persons</label>
+            <input type="number"
+                   name="persons"
+                   min="1"
+                   max="15"
+                   class="form-control form-control-sm bg-transparent text-white border-light text-center mx-auto"
+                   style="max-width: 120px;"
+                   required>
+          </div>
+
+          <!-- SAMPLE EXCEL -->
+          <div class="text-center mb-3">
+            <p class="fw-semibold mb-2">Sample Excel Sheet</p>
+            <a href="{% static 'images/sample_excel.png' %}" target="_blank">
+              <img src="{% static 'images/sample_excel.png' %}"
+                   class="img-fluid rounded shadow"
+                   style="max-width: 180px; cursor: zoom-in;">
+            </a>
+            <p class="small text-muted mt-1">Click to view full size</p>
+          </div>
+
+          <!-- EXCEL UPLOAD -->
+          <div class="mb-4 text-center">
+            <label class="form-label fw-semibold">
+              Upload Excel Sheet (Max 15 Names)
+            </label>
+            <input type="file"
+                   name="excel_file"
+                   accept=".xlsx"
+                   class="form-control form-control-sm bg-transparent text-white border-light mx-auto"
+                   style="max-width: 300px;"
+                   required>
+          </div>
+
+          <!-- CONFIRM -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-success btn-sm px-4">
+              Confirm Booking
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# Django database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Media files
+media/

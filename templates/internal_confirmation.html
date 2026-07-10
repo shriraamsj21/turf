@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Internal Booking Confirmed{% endblock %}
+
+{% block content %}
+<div class="container py-4 text-white">
+
+  <div class="text-center mb-4">
+    <h3>Internal Booking Confirmed ✅</h3>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="p-4 rounded"
+           style="background: rgba(220,220,220,0.15);">
+
+        <p><strong>Name:</strong> {{ customer_name }}</p>
+        <p><strong>Mobile:</strong> {{ mobile }}</p>
+        <p><strong>No. of Persons:</strong> {{ persons }}</p>
+
+        <hr>
+
+        <p class="fw-semibold">Players List</p>
+        <ol class="list-group list-group-numbered list-group-flush">
+  {% for p in players %}
+  <li class="list-group-item bg-transparent text-white">
+    {{ p.name }} — {{ p.reg_no }}
+  </li>
+  {% endfor %}
+</ol>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

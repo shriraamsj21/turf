@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Select Slot{% endblock %}
+
+{% block content %}
+<div class="container py-4 text-white">
+
+  <!-- HEADER ROW -->
+  <div class="position-relative text-center mb-2">
+    <h3 class="mb-5">Select Your Slot</h3>
+
+    <a href="{% url 'booking:home' %}"
+       class="btn btn-sm btn-danger position-absolute end-0 top-50 translate-middle-y">
+      ← Back
+    </a>
+  </div>
+
+  <!-- DATE TOGGLE -->
+<div class="text-center mt-3">
+  <a href="?date={{ tomorrow }}"
+     class="btn btn-sm me-3 {% if selected_date == tomorrow %}btn-success{% else %}btn-outline-light{% endif %}">
+    Tomorrow
+  </a>
+
+  <a href="?date={{ day_after_tomorrow }}"
+     class="btn btn-sm {% if selected_date == day_after_tomorrow %}btn-success{% else %}btn-outline-light{% endif %}">
+    Day After Tomorrow
+  </a>
+</div>
+
+  <p class="text-center mt-2">
+    {{ day }} • {{ date }}
+  </p>
+
+  <!-- SLOT FORM -->
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="selected_slot" id="selectedSlot">
+
+    <div class="row justify-content-center mt-4">
+      {% for slot in slots %}
+  <div class="col-6 col-md-4 col-lg-3 mb-3">
+
+    {% if slot in booked_slots %}
+      <!-- BOOKED SLOT -->
+      <button type="button"
+              class="btn btn-secondary w-100 slot-btn booked"
+              disabled>
+        {{ slot }} <br>
+        <small>Booked</small>
+      </button>
+    {% else %}
+      <!-- AVAILABLE SLOT -->
+      <button type="button"
+              class="btn btn-outline-light w-100 slot-btn"
+              onclick="selectSlot(this, '{{ slot }}')">
+        {{ slot }}
+      </button>
+    {% endif %}
+
+  </div>
+{% endfor %}
+
+    </div>
+
+    <!-- CONFIRM BUTTON -->
+    <div class="text-center mt-4">
+      <button type="submit"
+              class="btn btn-success confirm-btn"
+              id="confirmBtn"
+              disabled>
+        Confirm Slot
+      </button>
+    </div>
+  </form>
+
+</div>
+
+<style>
+  .slot-btn {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  .slot-btn.active {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+  }
+
+  .confirm-btn {
+    padding: 8px 24px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+  .slot-btn.booked {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+
+  @media (max-width: 576px) {
+    .confirm-btn {
+      width: 70%;
+    }
+  }
+</style>
+
+<script>
+  let selectedButton = null;
+
+  function selectSlot(button, slot) {
+    if (selectedButton) {
+      selectedButton.classList.remove("active");
+    }
+
+    button.classList.add("active");
+    selectedButton = button;
+
+    document.getElementById("selectedSlot").value = slot;
+    document.getElementById("confirmBtn").disabled = false;
+  }
+</script>
+
+{% endblock %}

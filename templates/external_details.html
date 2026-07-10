@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}External Booking Details{% endblock %}
+
+{% block content %}
+<div class="container py-4 text-white">
+
+  <!-- HEADER ROW -->
+  <div class="position-relative text-center mb-4">
+    <h3 class="mb-0">External Details</h3>
+
+    <a href="{% url 'booking:external_slots' %}"
+       class="btn btn-sm btn-danger position-absolute end-0 top-50 translate-middle-y">
+      ← Back
+    </a>
+  </div>
+
+  {% if error %}
+    <div class="alert alert-danger text-center">
+        {{ error }}
+    </div>
+    {% endif %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="card bg-dark text-white p-4 mx-auto"
+         style="max-width: 450px; border-radius: 10px;">
+
+      <!-- NAME -->
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" required>
+      </div>
+
+      <!-- MOBILE NUMBER -->
+      <div class="mb-3">
+        <label class="form-label">Mobile Number</label>
+        <input type="tel"
+               class="form-control"
+               name="mobile"
+               pattern="[0-9]{10}"
+               placeholder="10 digit mobile number"
+               required>
+        <small class="text-warning">
+          Enter a valid 10-digit mobile number
+        </small>
+      </div>
+
+      <!-- NUMBER OF PERSONS -->
+      <div class="mb-3">
+        <label class="form-label">Number of Persons</label>
+        <input type="number"
+               class="form-control"
+               name="persons"
+               min="1"
+               max="15"
+               required>
+        <small class="text-warning">
+          Maximum 15 persons allowed
+        </small>
+      </div>
+
+      <!-- PAYMENT SCANNER -->
+      <div class="mb-3">
+        <label class="form-label">Payment Scanner</label>
+
+        <div class="text-center">
+          <img src="{% static 'payment_qr.png' %}"
+               alt="Payment QR"
+               class="img-fluid rounded"
+               style="max-width: 220px;">
+        </div>
+
+        <p class="text-center mt-2 fw-bold text-warning">
+          ₹1000 / hour
+        </p>
+      </div>
+
+      <!-- RECEIPT UPLOAD -->
+      <div class="mb-4">
+        <label class="form-label">Upload Payment Receipt</label>
+        <input type="file"
+               class="form-control"
+               name="receipt"
+               accept="image/*"
+               required>
+      </div>
+
+      <!-- CONFIRM BOOKING -->
+      <button type="submit" class="btn btn-success w-100">
+        Confirm Booking
+      </button>
+
+    </div>
+  </form>
+
+</div>
+{% endblock %}
