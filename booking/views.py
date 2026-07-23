@@ -457,7 +457,8 @@ def internal_logout(request):
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
 from .models import PendingStudent, Student
-import random
+
+DEFAULT_OTP = "123456"
 
 
 @never_cache
@@ -494,8 +495,7 @@ def signup(request):
                 "error": "This email is already registered."
             })
 
-        # Generate 6-digit OTP
-        otp = str(random.randint(100000, 999999))
+        otp = DEFAULT_OTP
 
         # Remove any previous pending signup
         PendingStudent.objects.filter(email=email).delete()
@@ -507,18 +507,6 @@ def signup(request):
             password=make_password(password),
             otp=otp
         )
-
-        # Log OTP to Console (Dummy implementation)
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.warning("="*42)
-        logger.warning(f"DUMMY OTP for {email} is: {otp}")
-        logger.warning("="*42)
-        
-        # Fallback print with flush
-        print(f"==========================================", flush=True)
-        print(f"DUMMY OTP for {email} is: {otp}", flush=True)
-        print(f"==========================================", flush=True)
 
         request.session["pending_email"] = email
 
