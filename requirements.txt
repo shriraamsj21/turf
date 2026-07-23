@@ -76,8 +76,6 @@ narwhals==2.0.1
 networkx==3.5
 ninja==1.13.0
 numpy==2.2.6
-onnx==1.21.0
-onnxruntime==1.24.4
 Open-Tamil==1.1
 opencv-contrib-python==4.13.0.92
 opencv-python==4.13.0.92
