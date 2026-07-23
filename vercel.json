@@ -2,18 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "turfstie/wsgi.py",
+      "src": "manage.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles_build/static/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "turfstie/wsgi.py"
+      "dest": "manage.py"
     }
   ]
 }
