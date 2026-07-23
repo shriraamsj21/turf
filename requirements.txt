@@ -3,3 +3,4 @@ openpyxl==3.1.5
 PyMySQL==1.2.0
 python-dotenv==1.2.2
 twilio==9.10.9
+whitenoise==6.9.0
